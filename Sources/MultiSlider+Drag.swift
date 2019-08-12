@@ -53,23 +53,24 @@ extension MultiSlider: UIGestureRecognizerDelegate {
 
     /// adjusted position that doesn't cross prev/next thumb and total range
     private func boundedDraggedThumbPosition(targetPosition: CGFloat, stepSizeInView: CGFloat) -> CGFloat {
+        print("Bottom Thumb \(thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation))")
+        print("Min \(slideView.frame.minY)")
+        
+        print("Top Thumb \(thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation)))")
+        print("Max \(slideView.frame.maxY)")
+        
+        
         var delta = snapStepSize > 0 ? stepSizeInView : thumbViews[draggedThumbIndex].frame.size(in: orientation) / 2
         delta = keepsDistanceBetweenThumbs ? delta : 0
         if orientation == .horizontal { delta = -delta }
         
         let bottomLimit = draggedThumbIndex > 0
-//            ? thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation) - delta
-            print("Bottom Thumb \(thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation))")
-            print("Coordinate Min \(slideView.coordinate.minimumValue)")
-            print("Coordinate Min Val \(slideView.coordinate.min)")
-            ? slideView.coordinate.minimumValue - delta
+            //            ? thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation) - delta
+            ? slideView.frame.minY - delta
             : slideView.bounds.bottom(in: orientation)
         let topLimit = draggedThumbIndex < thumbViews.count - 1
-//            ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
-            print("Top Thumb \(thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation)))")
-            print("Coordinate Max \(slideView.coordinate.maximumValue)")
-            print("Coordinate Max Val \(slideView.coordinate.max)")
-            ? slideView.coordinate.maximumValue + delta
+            //            ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
+            ? slideView.frame.maxY + delta
             : slideView.bounds.top(in: orientation)
         if orientation == .vertical {
             return min(bottomLimit, max(targetPosition, topLimit))

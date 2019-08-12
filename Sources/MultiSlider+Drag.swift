@@ -64,9 +64,9 @@ extension MultiSlider: UIGestureRecognizerDelegate {
             ? slideView.bounds.bottom(in: orientation)
             : slideView.bounds.top(in: orientation)
         if orientation == .vertical {
-            return bottomLimit
+            return topLimit
         } else {
-            return max(bottomLimit, min(topLimit))
+            return bottomLimit
         }
     }
 

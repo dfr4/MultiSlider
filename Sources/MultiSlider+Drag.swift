@@ -63,7 +63,8 @@ extension MultiSlider: UIGestureRecognizerDelegate {
             ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
             : slideView.bounds.top(in: orientation)
         if orientation == .vertical {
-            minLimit = min(bottomLimit, max(targetPosition, topLimit))
+            print("MIN \(min(bottomLimit, max(targetPosition, topLimit)))")
+            NSLog("MIN \(min(bottomLimit, max(targetPosition, topLimit)))")
             return min(bottomLimit, max(targetPosition, topLimit))
         } else {
             return max(bottomLimit, min(targetPosition, topLimit))

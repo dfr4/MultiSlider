@@ -26,8 +26,6 @@ open class MultiSlider: UIControl {
 
     @IBInspectable open dynamic var minimumValue: CGFloat = 0 { didSet { adjustValuesToStepAndLimits() } }
     @IBInspectable open dynamic var maximumValue: CGFloat = 1 { didSet { adjustValuesToStepAndLimits() } }
-    @IBInspectable open dynamic var minLimit: CGFloat = 0
-    @IBInspectable open dynamic var maxLimit: CGFloat = 0
     @IBInspectable open dynamic var isContinuous: Bool = true
 
     /// snap thumbs to specific values, evenly spaced. (default = 0: allow any value)

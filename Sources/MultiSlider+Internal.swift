@@ -101,10 +101,14 @@ extension MultiSlider {
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
 
-        outerTrackViews = [
-            outerTrackView(constraining: .top(in: orientation), to: firstThumb),
-            outerTrackView(constraining: .bottom(in: orientation), to: lastThumb),
-        ]
+        if value[1] < value[0] {
+            outerTrackViews = [otherOuterTrackView(from: lastThumb, to: firstThumb)]
+        } else {
+            outerTrackViews = [
+                outerTrackView(constraining: .top(in: orientation), to: firstThumb),
+                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb),
+            ]
+        }
     }
 
     private func outerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
@@ -120,6 +124,26 @@ extension MultiSlider {
             view.layer.maskedCorners = .direction(constraining.opposite)
         }
 
+        return view
+    }
+    
+    private func otherOuterTrackView(from firstView: UIView, to secondView: UIView) -> UIView {
+        let view = UIView()
+        view.backgroundColor = outerTrackColor
+        
+        let constraining: NSLayoutConstraint.Attribute = .top(in: orientation)
+        
+        trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
+        trackView.constrain(view, at: .top(in: orientation), to: secondView, at: .center(in: orientation))
+        trackView.constrain(view, at: .bottom(in: orientation), to: firstView, at: .center(in: orientation))
+        trackView.sendSubviewToBack(view)
+        
+        view.layer.cornerRadius = trackView.layer.cornerRadius
+        if #available(iOS 11.0, *) {
+            view.layer.maskedCorners = .direction(constraining.opposite)
+        }
+        
         return view
     }
 

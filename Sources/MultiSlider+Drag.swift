@@ -38,7 +38,7 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         }
 
         // don't cross prev/next thumb and total range
-        targetPosition = boundedDraggedThumbPosition(targetPosition: targetPosition, stepSizeInView: stepSizeInView)
+//        targetPosition = boundedDraggedThumbPosition(targetPosition: targetPosition, stepSizeInView: stepSizeInView)
 
         // change corresponding value
         updateDraggedThumbValue(relativeValue: targetPosition / slideViewLength)

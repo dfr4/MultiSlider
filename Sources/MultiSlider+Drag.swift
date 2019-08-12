@@ -58,10 +58,10 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         if orientation == .horizontal { delta = -delta }
         
         let bottomLimit = draggedThumbIndex > 0
-            ? 0 - delta
+            ? slideView.bounds.bottom(in: orientation)
             : slideView.bounds.bottom(in: orientation)
         let topLimit = draggedThumbIndex < thumbViews.count - 1
-            ? slideView.frame.height + delta
+            ? slideView.bounds.top(in: orientation)
             : slideView.bounds.top(in: orientation)
         if orientation == .vertical {
             return min(bottomLimit, max(targetPosition, topLimit))

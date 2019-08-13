@@ -177,6 +177,7 @@ open class MultiSlider: UIControl {
     var draggedThumbIndex: Int = -1
     lazy var defaultThumbImage: UIImage? = .circle()
     var selectionFeedbackGenerator = AvailableHapticFeedback()
+    var outerView = UIView(frame: .zero)
 
     // MARK: - Overrides
 

@@ -102,8 +102,10 @@ extension MultiSlider {
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
 
         if thumbViews[1].frame.minY > thumbViews[0].frame.minY {
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
+            if #available(iOS 10.0, *) {
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
+            }
             outerTrackViews = [otherOuterTrackView(from: lastThumb, to: firstThumb)]
         } else {
             outerTrackViews = [

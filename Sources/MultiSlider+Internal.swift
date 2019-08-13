@@ -104,10 +104,9 @@ extension MultiSlider {
         
         if self.value[1] < self.value[0]  {
             outerView.removeFromSuperview()
-            outerView = UIView(frame: CGRect(x: trackView.frame.minX + trackView.frame.width/2, y: thumbViews[1].frame.midY, width: trackView.frame.width, height: thumbViews[1].frame.midY - thumbViews[0].frame.midY))
+            outerView = UIView(frame: CGRect(x: trackView.frame.minX + trackView.frame.width/2, y: thumbViews[0].frame.midY, width: trackView.frame.width, height: thumbViews[1].frame.midY - thumbViews[0].frame.midY))
             outerView.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1)
-            outerView.layer.cornerRadius = trackView.layer.cornerRadius
-            outerView.layer.masksToBounds = true
+            outerView.layer.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1).cgColor
             trackView.addSubview(outerView)
             
             NSLog("Height 0 top \(thumbViews[0].frame.midY - thumbViews[1].frame.midY)")

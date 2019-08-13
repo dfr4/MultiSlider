@@ -131,11 +131,11 @@ extension MultiSlider {
         let view = UIView()
         view.backgroundColor = outerTrackColor
         trackView.addSubview(view)
-                
+        
         let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: trackView, attribute: .width, multiplier: 1.0, constant: 0.0)
         
-        let topConstraint = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: firstView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
-        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: secondView, attribute: .top, multiplier: 1.0, constant: 0.0)
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: firstView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: secondView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
         
         trackView.addConstraints([bottomConstraint, topConstraint, widthConstraint])
         trackView.sendSubviewToBack(view)

@@ -101,7 +101,7 @@ extension MultiSlider {
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
 
-        if thumbViews[1].frame.minY > thumbViews[0].frame.minY {
+        if self.value[1] < self.value[0]  {
             if #available(iOS 10.0, *) {
                 let generator = UIImpactFeedbackGenerator(style: .heavy)
                 generator.impactOccurred()

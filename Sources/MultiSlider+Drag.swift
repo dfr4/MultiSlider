@@ -64,7 +64,7 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         //        let previousTopLimit = draggedThumbIndex < thumbViews.count - 1
         //            ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
         //            : slideView.bounds.top(in: orientation)
-        updateOuterTrackViews()
+        
         if orientation == .vertical {
             return min(bottomLimit, max(targetPosition, topLimit))
         } else {

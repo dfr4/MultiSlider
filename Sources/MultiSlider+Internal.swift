@@ -7,8 +7,6 @@
 
 extension MultiSlider {
     func setup() {
-        outerView.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1)
-        outerView.layer.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1).cgColor
         
         trackView.backgroundColor = actualTintColor
         updateTrackViewCornerRounding()

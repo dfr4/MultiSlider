@@ -105,7 +105,7 @@ extension MultiSlider {
             NSLog("Value 0 smaller than value 1")
         }
         
-        if self.value[1] < self.valuse[0]  {
+        if self.value[1] < self.value[0]  {
             NSLog("Value 1 smaller than value 0")
 //            outerTrackViews = [otherOuterTrackView(from: lastThumb, to: firstThumb)]
         } else {

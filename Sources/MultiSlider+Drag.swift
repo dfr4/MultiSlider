@@ -49,6 +49,12 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         }
 
         if isContinuous { sendActions(for: [.valueChanged, .primaryActionTriggered]) }
+        
+        updatingThumbs(panGesture)
+    }
+    
+    @objc open func updatingThumbs(_ panGesture: UIPanGestureRecognizer) {
+        
     }
 
     /// adjusted position that doesn't cross prev/next thumb and total range

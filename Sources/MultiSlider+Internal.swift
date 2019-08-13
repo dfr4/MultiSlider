@@ -132,6 +132,9 @@ extension MultiSlider {
         view.backgroundColor = outerTrackColor
         trackView.addSubview(view)
         
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == .top(in: orientation) }
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == .bottom(in: orientation) }
+        
         let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: trackView, attribute: .width, multiplier: 1.0, constant: 0.0)
         
         let topConstraint = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: firstView, attribute: .centerY, multiplier: 1.0, constant: 0.0)

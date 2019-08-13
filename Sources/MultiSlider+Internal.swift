@@ -12,6 +12,9 @@ extension MultiSlider {
         slideView.layoutMargins = .zero
         setupOrientation()
         setupPanGesture()
+        
+        outerView.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1)
+        outerView.layer.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1).cgColor
 
         isAccessibilityElement = true
         accessibilityIdentifier = "multi_slider"
@@ -105,13 +108,7 @@ extension MultiSlider {
         if self.value[1] < self.value[0]  {
             outerView.removeFromSuperview()
             outerView = UIView(frame: CGRect(x: trackView.frame.minX + trackView.frame.width/2, y: thumbViews[0].frame.midY, width: trackView.frame.width, height: thumbViews[1].frame.midY - thumbViews[0].frame.midY))
-            outerView.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1)
-            outerView.layer.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1).cgColor
             trackView.addSubview(outerView)
-            
-            NSLog("Height 0 top \(thumbViews[0].frame.midY - thumbViews[1].frame.midY)")
-            NSLog("Height 1 top \(thumbViews[1].frame.midY - thumbViews[0].frame.midY)")
-            NSLog("")
             
             trackView.bringSubviewToFront(outerView)
             trackView.bringSubviewToFront(thumbViews[0])

@@ -101,12 +101,18 @@ extension MultiSlider {
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
 
-       
+        if self.value[1] < self.value[0]  {
+            if #available(iOS 10.0, *) {
+                let generator = UIImpactFeedbackGenerator(style: .heavy)
+                generator.impactOccurred()
+            }
+            outerTrackViews = [otherOuterTrackView(from: lastThumb, to: firstThumb)]
+        } else {
             outerTrackViews = [
                 outerTrackView(constraining: .top(in: orientation), to: firstThumb),
                 outerTrackView(constraining: .bottom(in: orientation), to: lastThumb),
             ]
-        
+        }
     }
 
     private func outerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {

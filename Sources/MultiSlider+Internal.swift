@@ -130,19 +130,17 @@ extension MultiSlider {
     private func otherOuterTrackView(from firstView: UIView, to secondView: UIView) -> UIView {
         let view = UIView()
         view.backgroundColor = outerTrackColor
+        trackView.addSubview(view)
         
-        let constraining: NSLayoutConstraint.Attribute = .top(in: orientation)
+        let rightSideConstraint = NSLayoutConstraint(item: view, attribute: .right, relatedBy: .equal, toItem: trackView, attribute: .right, multiplier: 1.0, constant: 0.0)
+        let leftSideConstraint = NSLayoutConstraint(item: view, attribute: .left, relatedBy: .equal, toItem: trackView, attribute: .left, multiplier: 1.0, constant: 0.0)
+        let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: trackView, attribute: .width, multiplier: 1.0, constant: 0.0)
         
-        trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
-        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
-        trackView.constrain(view, at: .top(in: orientation), to: secondView, at: .center(in: orientation))
-        trackView.constrain(view, at: .bottom(in: orientation), to: firstView, at: .center(in: orientation))
+        let topConstraint = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: firstView, attribute: .bottom, multiplier: 1.0, constant: 0.0)
+        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: secondView, attribute: .top, multiplier: 1.0, constant: 0.0)
+        
+        trackView.addConstraints([rightSideConstraint, leftSideConstraint, bottomConstraint, topConstraint, widthConstraint])
         trackView.sendSubviewToBack(view)
-        
-        view.layer.cornerRadius = trackView.layer.cornerRadius
-        if #available(iOS 11.0, *) {
-            view.layer.maskedCorners = .direction(constraining.opposite)
-        }
         
         return view
     }

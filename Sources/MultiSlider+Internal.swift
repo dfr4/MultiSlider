@@ -101,13 +101,21 @@ extension MultiSlider {
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
 
-        if self.value[0] < self.value[1] {
-            NSLog("Value 0 smaller than value 1")
-        }
         
         if self.value[1] < self.value[0]  {
-            NSLog("Value 1 smaller than value 0")
-//            outerTrackViews = [otherOuterTrackView(from: lastThumb, to: firstThumb)]
+            let outerView = UIView(frame: CGRect(x: trackView.frame.minX, y: thumbViews[1].frame.midY, width: trackView.frame.width, height: thumbViews[0].frame.midY - thumbViews[1].frame.midY))
+            outerView.backgroundColor = outerTrackColor
+            outerView.layer.cornerRadius = trackView.layer.cornerRadius
+            outerView.layer.masksToBounds = true
+            trackView.addSubview(outerView)
+            
+            NSLog("Height 0 top \(thumbViews[0].frame.midY - thumbViews[1].frame.midY)")
+            NSLog("Height 1 top \(thumbViews[1].frame.midY - thumbViews[0].frame.midY)")
+            NSLog("")
+            
+            trackView.bringSubviewToFront(outerView)
+            trackView.bringSubviewToFront(thumbViews[0])
+            trackView.bringSubviewToFront(thumbViews[1])
         } else {
             outerTrackViews = [
                 outerTrackView(constraining: .top(in: orientation), to: firstThumb),

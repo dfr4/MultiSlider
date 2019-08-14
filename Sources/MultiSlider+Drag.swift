@@ -99,9 +99,9 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         positionThumbView(draggedThumbIndex)
         if draggedThumbIndex < valueLabels.count {
             updateValueLabel(draggedThumbIndex)
-            if isValueLabelRelative && draggedThumbIndex + 1 < valueLabels.count {
-                updateValueLabel(draggedThumbIndex + 1)
-            }
+//            if isValueLabelRelative && draggedThumbIndex + 1 < valueLabels.count {
+//                updateValueLabel(draggedThumbIndex + 1)
+//            }
         }
     }
 

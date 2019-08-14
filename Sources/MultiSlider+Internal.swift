@@ -247,11 +247,11 @@ extension MultiSlider {
                 slideView.constrain(thumbView, at: .centerX, to: slideView, at: .left)
             }
         } else { // vertical orientation
-//            if thumbRelativeDistanceToMax.isNormal {
-//                slideView.constrain(thumbView, at: .centerY, to: slideView, at: .bottom, ratio: CGFloat(thumbRelativeDistanceToMax))
-//            } else {
+            if thumbRelativeDistanceToMax.isNormal {
+                slideView.constrain(thumbView, at: .centerY, to: slideView, at: .bottom, ratio: CGFloat(thumbRelativeDistanceToMax))
+            } else {
                 slideView.constrain(thumbView, at: .centerY, to: slideView, at: .top)
-//            }
+            }
         }
         UIView.animate(withDuration: 0.1) {
             self.slideView.updateConstraintsIfNeeded()

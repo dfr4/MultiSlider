@@ -104,12 +104,10 @@ extension MultiSlider {
         
         
         if self.value[1] < self.value[0]  {
-            NSLog("We are here")
             outerTrackViews = [innerTrackView(constraining: .top(in: orientation), to: lastThumb),
                                innerTrackView(constraining: .bottom(in: orientation), to: firstThumb), outerTrackView(constraining: .top(in: orientation), to: firstThumb),
                                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
         } else {
-            NSLog("We are not there")
             outerTrackViews = [
                 outerTrackView(constraining: .top(in: orientation), to: firstThumb),
                 outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
@@ -133,8 +131,6 @@ extension MultiSlider {
     }
     
     private func innerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
-        
-        NSLog("Inner track created")
         
         let view = UIView()
         view.backgroundColor = tintColor

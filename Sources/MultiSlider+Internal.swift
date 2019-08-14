@@ -19,7 +19,7 @@ extension MultiSlider {
         accessibilityLabel = "slider"
         accessibilityTraits = [.adjustable]
     }
-
+    
     private func setupPanGesture() {
         addConstrainedSubview(panGestureView)
         for edge: NSLayoutConstraint.Attribute in [.top, .bottom, .left, .right] {
@@ -29,7 +29,7 @@ extension MultiSlider {
         panGesture.delegate = self
         panGestureView.addGestureRecognizer(panGesture)
     }
-
+    
     func setupOrientation() {
         trackView.removeFromSuperview()
         trackView.removeConstraints(trackView.constraints)
@@ -62,7 +62,7 @@ extension MultiSlider {
         }
         setupTrackLayoutMargins()
     }
-
+    
     func setupTrackLayoutMargins() {
         let thumbSize = (thumbImage ?? defaultThumbImage)?.size ?? CGSize(width: 2, height: 2)
         let thumbDiameter = orientation == .vertical ? thumbSize.height : thumbSize.width
@@ -73,7 +73,7 @@ extension MultiSlider {
             trackView.layoutMargins = UIEdgeInsets(top: 0, left: halfThumb, bottom: 0, right: halfThumb)
         }
     }
-
+    
     func repositionThumbViews() {
         thumbViews.forEach { $0.removeFromSuperview() }
         thumbViews = []
@@ -81,7 +81,7 @@ extension MultiSlider {
         valueLabels = []
         adjustThumbCountToValueCount()
     }
-
+    
     func adjustThumbCountToValueCount() {
         if value.count == thumbViews.count {
             return
@@ -95,33 +95,24 @@ extension MultiSlider {
         }
         updateOuterTrackViews()
     }
-
+    
     func updateOuterTrackViews() {
         outerTrackViews.removeViewsStartingAt(0)
         outerTrackViews.removeAll()
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
-
+        
         
         if self.value[1] < self.value[0]  {
-            outerView.removeFromSuperview()
-            outerView = UIView(frame: CGRect(x: trackView.frame.minX + trackView.frame.width/2, y: thumbViews[0].frame.midY, width: trackView.frame.width, height: thumbViews[1].frame.midY - thumbViews[0].frame.midY))
-            
-            trackView.addSubview(outerView)
-            
-            trackView.bringSubviewToFront(outerView)
-            trackView.bringSubviewToFront(thumbViews[0])
-            trackView.bringSubviewToFront(thumbViews[1])
+            outerTrackViews = [innerTrackView(constraining: .top(in: orientation), to: lastThumb),
+                               innerTrackView(constraining: .bottom(in: orientation), to: firstThumb)]
         } else {
-            outerView.removeFromSuperview()
-            
             outerTrackViews = [
                 outerTrackView(constraining: .top(in: orientation), to: firstThumb),
-                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb),
-            ]
+                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
         }
     }
-
+    
     private func outerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
         let view = UIView()
         view.backgroundColor = outerTrackColor
@@ -129,34 +120,31 @@ extension MultiSlider {
         trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
         trackView.constrain(view, at: constraining, to: thumbView, at: .center(in: orientation))
         trackView.sendSubviewToBack(view)
-
+        
         view.layer.cornerRadius = trackView.layer.cornerRadius
         if #available(iOS 11.0, *) {
             view.layer.maskedCorners = .direction(constraining.opposite)
         }
-
+        
         return view
     }
     
-    private func otherOuterTrackView(from firstView: UIView, to secondView: UIView) -> UIView {
+    private func innerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
         let view = UIView()
-        view.backgroundColor = outerTrackColor
-        trackView.addSubview(view)
-        
-        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == .top(in: orientation) }
-        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == .bottom(in: orientation) }
-        
-        let widthConstraint = NSLayoutConstraint(item: view, attribute: .width, relatedBy: .equal, toItem: trackView, attribute: .width, multiplier: 1.0, constant: 0.0)
-        
-        let topConstraint = NSLayoutConstraint(item: view, attribute: .top, relatedBy: .equal, toItem: firstView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        let bottomConstraint = NSLayoutConstraint(item: view, attribute: .bottom, relatedBy: .equal, toItem: secondView, attribute: .centerY, multiplier: 1.0, constant: 0.0)
-        
-        trackView.addConstraints([bottomConstraint, topConstraint, widthConstraint])
+        view.backgroundColor = tintColor
+        trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
+        trackView.constrain(view, at: constraining, to: thumbView, at: .center(in: orientation))
         trackView.sendSubviewToBack(view)
+        
+        view.layer.cornerRadius = trackView.layer.cornerRadius
+        if #available(iOS 11.0, *) {
+            view.layer.maskedCorners = .direction(constraining.opposite)
+        }
         
         return view
     }
-
+    
     private func addThumbView() {
         let i = thumbViews.count
         let thumbView = UIImageView(image: thumbImage ?? defaultThumbImage)
@@ -168,13 +156,13 @@ extension MultiSlider {
         addValueLabel(i)
         updateThumbViewShadowVisibility()
     }
-
+    
     func updateThumbViewShadowVisibility() {
         thumbViews.forEach {
             $0.layer.shadowOpacity = showsThumbImageShadow ? 0.25 : 0
         }
     }
-
+    
     func addValueLabel(_ i: Int) {
         guard valueLabelPosition != .notAnAttribute else { return }
         let valueLabel = UITextField()
@@ -191,7 +179,7 @@ extension MultiSlider {
         valueLabels.append(valueLabel)
         updateValueLabel(i)
     }
-
+    
     func updateValueLabel(_ i: Int) {
         let labelValue: CGFloat
         if isValueLabelRelative {
@@ -201,7 +189,7 @@ extension MultiSlider {
         }
         valueLabels[i].text = valueLabelFormatter.string(from: NSNumber(value: Double(labelValue)))
     }
-
+    
     func updateValueCount(_ count: Int) {
         guard count != value.count else { return }
         isSettingValue = true
@@ -225,26 +213,26 @@ extension MultiSlider {
         if value.count > count { // don't add "else", since prev calc may add too many values in some cases
             value.removeLast(value.count - count)
         }
-
+        
         isSettingValue = false
     }
-
+    
     func adjustValuesToStepAndLimits() {
         var adjusted = value.sorted()
         for i in 0 ..< adjusted.count {
             let snapped = adjusted[i].rounded(snapStepSize)
             adjusted[i] = min(maximumValue, max(minimumValue, snapped))
         }
-
+        
         isSettingValue = true
         value = adjusted
         isSettingValue = false
-
+        
         for i in 0 ..< value.count {
             positionThumbView(i)
         }
     }
-
+    
     func positionThumbView(_ i: Int) {
         let thumbView = thumbViews[i]
         let thumbValue = value[i]
@@ -267,7 +255,7 @@ extension MultiSlider {
             self.slideView.updateConstraintsIfNeeded()
         }
     }
-
+    
     func layoutTrackEdge(toView: UIImageView, edge: NSLayoutConstraint.Attribute, superviewEdge: NSLayoutConstraint.Attribute) {
         removeFirstConstraint { $0.firstItem === self.trackView && ($0.firstAttribute == edge || $0.firstAttribute == superviewEdge) }
         if nil != toView.image {
@@ -276,7 +264,7 @@ extension MultiSlider {
             constrain(trackView, at: edge, to: self, at: superviewEdge)
         }
     }
-
+    
     func updateTrackViewCornerRounding() {
         trackView.layer.cornerRadius = hasRoundTrackEnds ? trackWidth / 2 : 1
         outerTrackViews.forEach { $0.layer.cornerRadius = trackView.layer.cornerRadius }

@@ -177,12 +177,7 @@ open class MultiSlider: UIControl {
     var draggedThumbIndex: Int = -1
     lazy var defaultThumbImage: UIImage? = .circle()
     var selectionFeedbackGenerator = AvailableHapticFeedback()
-    var outerView = UIView(frame: .zero) {
-        didSet {
-            outerView.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1)
-            outerView.layer.backgroundColor = UIColor(red: 233, green: 209, blue: 253, alpha: 1).cgColor
-        }
-    }
+   
 
     // MARK: - Overrides
 

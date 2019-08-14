@@ -109,6 +109,7 @@ extension MultiSlider {
                                innerTrackView(constraining: .bottom(in: orientation), to: firstThumb), outerTrackView(constraining: .top(in: orientation), to: firstThumb),
                                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
         } else {
+            NSLog("We are not there")
             outerTrackViews = [
                 outerTrackView(constraining: .top(in: orientation), to: firstThumb),
                 outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]

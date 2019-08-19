@@ -8,6 +8,8 @@
 extension MultiSlider {
     func setup() {
         
+        leftTrackColor = UIColor(red: 213/255, green: 0, blue: 0, alpha: 1)
+        rightTrackColor = UIColor(red: 24/255, green: 90/255, blue: 188/255, alpha: 1)
         trackView.backgroundColor = actualTintColor
         updateTrackViewCornerRounding()
         slideView.layoutMargins = .zero

@@ -102,16 +102,36 @@ extension MultiSlider {
         guard nil != outerTrackColor else { return }
         guard let firstThumb = thumbViews.first, let lastThumb = thumbViews.last, firstThumb != lastThumb else { return }
         
-        
-        if self.value[1] < self.value[0]  {
-            outerTrackViews = [innerTrackView(constraining: .top(in: orientation), to: lastThumb),
-                               innerTrackView(constraining: .bottom(in: orientation), to: firstThumb), outerTrackView(constraining: .top(in: orientation), to: firstThumb),
-                               outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
+        if orientation == .vertical {
+            if self.value[1] < self.value[0]  {
+                outerTrackViews = [innerTrackView(constraining: .top(in: orientation), to: lastThumb),
+                                   innerTrackView(constraining: .bottom(in: orientation), to: firstThumb), outerTrackView(constraining: .top(in: orientation), to: firstThumb),
+                                   outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
+            } else {
+                outerTrackViews = [
+                    outerTrackView(constraining: .top(in: orientation), to: firstThumb),
+                    outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
+            }
         } else {
-            outerTrackViews = [
-                outerTrackView(constraining: .top(in: orientation), to: firstThumb),
-                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
+            outerTrackViews = [outerTrackViewWithColor(constraining: .top(in: orientation), to: firstThumb, withColor: leftTrackColor),
+                               outerTrackViewWithColor(constraining: .bottom(in: orientation), to: lastThumb, withColor: rightTrackColor)]
         }
+    }
+    
+    private func outerTrackViewWithColor(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView, withColor color: UIColor) -> UIView {
+        let view = UIView()
+        view.backgroundColor = color
+        trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
+        trackView.constrain(view, at: constraining, to: thumbView, at: .center(in: orientation))
+        trackView.sendSubviewToBack(view)
+        
+        view.layer.cornerRadius = trackView.layer.cornerRadius
+        if #available(iOS 11.0, *) {
+            view.layer.maskedCorners = .direction(constraining.opposite)
+        }
+        
+        return view
     }
     
     private func outerTrackView(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {

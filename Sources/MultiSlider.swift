@@ -85,12 +85,12 @@ open class MultiSlider: UIControl {
         }
     }
 
-    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor(red: 213, green: 0, blue: 0, alpha: 1) {
+    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor(red: 213/255, green: 0, blue: 0, alpha: 1) {
         didSet {
             updateOuterTrackViews()
         }
     }
-    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor(red: 24, green: 90, blue: 188, alpha: 1) {
+    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor(red: 24/255, green: 90/255, blue: 188/255, alpha: 1) {
         didSet {
             updateOuterTrackViews()
         }

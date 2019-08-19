@@ -113,8 +113,11 @@ extension MultiSlider {
                     outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
             }
         } else {
-            outerTrackViews = [outerTrackViewWithColor(constraining: .top(in: orientation), to: lastThumb, withColor: leftTrackColor),
-                               outerTrackViewWithColor(constraining: .bottom(in: orientation), to: firstThumb, withColor: rightTrackColor)]
+            outerTrackViews = [
+                outerTrackView(constraining: .top(in: orientation), to: firstThumb),
+                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
+//            outerTrackViews = [outerTrackViewWithColor(constraining: .top(in: orientation), to: lastThumb, withColor: leftTrackColor),
+//                               outerTrackViewWithColor(constraining: .bottom(in: orientation), to: firstThumb, withColor: rightTrackColor)]
         }
     }
     

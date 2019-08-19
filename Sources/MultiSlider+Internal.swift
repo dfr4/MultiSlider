@@ -114,16 +114,31 @@ extension MultiSlider {
             }
         } else {
             outerTrackViews = [
-                outerTrackView(constraining: .top(in: orientation), to: firstThumb),
-                outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
-//            outerTrackViews = [outerTrackViewWithColor(constraining: .top(in: orientation), to: lastThumb, withColor: leftTrackColor),
-//                               outerTrackViewWithColor(constraining: .bottom(in: orientation), to: firstThumb, withColor: rightTrackColor)]
+                outerTrackViews = [
+                    outerTrackViewLeft(constraining: .top(in: orientation), to: firstThumb),
+                    outerTrackViewRight(constraining: .bottom(in: orientation), to: lastThumb)]
         }
     }
     
-    private func outerTrackViewWithColor(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView, withColor color: UIColor) -> UIView {
+    private func outerTrackViewLeft(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
         let view = UIView()
-        view.backgroundColor = color
+        view.backgroundColor = leftTrackColor
+        trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
+        trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
+        trackView.constrain(view, at: constraining, to: thumbView, at: .center(in: orientation))
+        trackView.sendSubviewToBack(view)
+        
+        view.layer.cornerRadius = trackView.layer.cornerRadius
+        if #available(iOS 11.0, *) {
+            view.layer.maskedCorners = .direction(constraining.opposite)
+        }
+        
+        return view
+    }
+    
+    private func outerTrackViewRight(constraining: NSLayoutConstraint.Attribute, to thumbView: UIView) -> UIView {
+        let view = UIView()
+        view.backgroundColor = rightTrackColor
         trackView.addConstrainedSubview(view, constrain: .top, .bottom, .leading, .trailing)
         trackView.removeFirstConstraint { $0.firstItem === view && $0.firstAttribute == constraining }
         trackView.constrain(view, at: constraining, to: thumbView, at: .center(in: orientation))

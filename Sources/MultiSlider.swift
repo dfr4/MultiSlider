@@ -27,8 +27,16 @@ open class MultiSlider: UIControl {
     @IBInspectable open dynamic var minimumValue: CGFloat = 0 { didSet { adjustValuesToStepAndLimits() } }
     @IBInspectable open dynamic var maximumValue: CGFloat = 1 { didSet { adjustValuesToStepAndLimits() } }
     @IBInspectable open dynamic var isContinuous: Bool = true
-    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor.clear
-    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor.clear
+    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor.clear {
+        didSet {
+            updateOuterTrackViews()
+        }
+    }
+    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor.clear {
+        didSet {
+            updateOuterTrackViews()
+        }
+    }
 
     /// snap thumbs to specific values, evenly spaced. (default = 0: allow any value)
     @IBInspectable open dynamic var snapStepSize: CGFloat = 0 { didSet { adjustValuesToStepAndLimits() } }

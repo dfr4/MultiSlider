@@ -62,14 +62,22 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         var delta = snapStepSize > 0 ? stepSizeInView : thumbViews[draggedThumbIndex].frame.size(in: orientation) / 2
         delta = keepsDistanceBetweenThumbs ? delta : 0
         if orientation == .horizontal { delta = -delta }
-        let bottomLimit = slideView.bounds.bottom(in: orientation)
-        //        let previousBottomLimit = draggedThumbIndex > 0
-        //            ? thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation) - delta
-        //            : slideView.bounds.bottom(in: orientation)
-        let topLimit = slideView.bounds.top(in: orientation)
-        //        let previousTopLimit = draggedThumbIndex < thumbViews.count - 1
-        //            ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
-        //            : slideView.bounds.top(in: orientation)
+        
+        var bottomLimit: CGFloat!
+        var topLimit: CGFloat!
+        
+        if orientation == .vertical {
+            bottomLimit = slideView.bounds.bottom(in: orientation)
+            topLimit = slideView.bounds.top(in: orientation)
+        } else {
+            bottomLimit = draggedThumbIndex > 0
+                ? thumbViews[draggedThumbIndex - 1].center.coordinate(in: orientation) - delta
+                : slideView.bounds.bottom(in: orientation)
+            
+            topLimit = draggedThumbIndex < thumbViews.count - 1
+                ? thumbViews[draggedThumbIndex + 1].center.coordinate(in: orientation) + delta
+                : slideView.bounds.top(in: orientation)
+        }
         
         if orientation == .vertical {
             return min(bottomLimit, max(targetPosition, topLimit))
@@ -99,9 +107,9 @@ extension MultiSlider: UIGestureRecognizerDelegate {
         positionThumbView(draggedThumbIndex)
         if draggedThumbIndex < valueLabels.count {
             updateValueLabel(draggedThumbIndex)
-//            if isValueLabelRelative && draggedThumbIndex + 1 < valueLabels.count {
-//                updateValueLabel(draggedThumbIndex + 1)
-//            }
+            if isValueLabelRelative && draggedThumbIndex + 1 < valueLabels.count {
+                updateValueLabel(draggedThumbIndex + 1)
+            }
         }
     }
 

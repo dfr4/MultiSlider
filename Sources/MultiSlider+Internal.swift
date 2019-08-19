@@ -113,7 +113,6 @@ extension MultiSlider {
                     outerTrackView(constraining: .bottom(in: orientation), to: lastThumb)]
             }
         } else {
-            outerTrackViews = [
                 outerTrackViews = [
                     outerTrackViewLeft(constraining: .top(in: orientation), to: firstThumb),
                     outerTrackViewRight(constraining: .bottom(in: orientation), to: lastThumb)]

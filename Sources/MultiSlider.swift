@@ -27,16 +27,6 @@ open class MultiSlider: UIControl {
     @IBInspectable open dynamic var minimumValue: CGFloat = 0 { didSet { adjustValuesToStepAndLimits() } }
     @IBInspectable open dynamic var maximumValue: CGFloat = 1 { didSet { adjustValuesToStepAndLimits() } }
     @IBInspectable open dynamic var isContinuous: Bool = true
-    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor.clear {
-        didSet {
-            updateOuterTrackViews()
-        }
-    }
-    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor.clear {
-        didSet {
-            updateOuterTrackViews()
-        }
-    }
 
     /// snap thumbs to specific values, evenly spaced. (default = 0: allow any value)
     @IBInspectable open dynamic var snapStepSize: CGFloat = 0 { didSet { adjustValuesToStepAndLimits() } }
@@ -95,6 +85,17 @@ open class MultiSlider: UIControl {
         }
     }
 
+    @IBInspectable open dynamic var leftTrackColor: UIColor = UIColor(red: 213, green: 0, blue: 0, alpha: 1) {
+        didSet {
+            updateOuterTrackViews()
+        }
+    }
+    @IBInspectable open dynamic var rightTrackColor: UIColor = UIColor(red: 24, green: 90, blue: 188, alpha: 1) {
+        didSet {
+            updateOuterTrackViews()
+        }
+    }
+    
     /// track color before first thumb and after last thumb. `nil` means to use the tintColor, like the rest of the track.
     @IBInspectable open dynamic var outerTrackColor: UIColor? {
         didSet {

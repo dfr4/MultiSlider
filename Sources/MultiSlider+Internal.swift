@@ -187,6 +187,8 @@ extension MultiSlider {
     }
     
     private func addThumbView() {
+        NSLog("Adding thumb view")
+        
         let i = thumbViews.count
         let thumbView = UIImageView(image: thumbImage ?? defaultThumbImage)
         thumbView.addShadow()

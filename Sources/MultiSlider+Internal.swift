@@ -187,8 +187,6 @@ extension MultiSlider {
     }
     
     private func addThumbView() {
-        NSLog("Adding thumb view")
-        
         let i = thumbViews.count
         let thumbView = UIImageView(image: thumbImage ?? defaultThumbImage)
         thumbView.addShadow()
@@ -261,7 +259,7 @@ extension MultiSlider {
     }
     
     func adjustValuesToStepAndLimits() {
-        var adjusted = value.sorted()
+        var adjusted = value
         for i in 0 ..< adjusted.count {
             let snapped = adjusted[i].rounded(snapStepSize)
             adjusted[i] = min(maximumValue, max(minimumValue, snapped))
